@@ -1,0 +1,7 @@
+XSHMakeFile is a simple BASH (even though I'd prefer to make it work with SH) script allowing to represent directories and their content as an object in the language you like while keeping indentation.
+
+This script supports JavaScript (and therefore JSON) and PHP but by giving the good argument, you should be able to get it for nearly any language.
+
+To see the result, check example (input is transformed into a file in output depending on the arguments).
+
+You can try it yourself by running 'make clean && make example'.
