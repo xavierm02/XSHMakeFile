@@ -13,7 +13,7 @@ example: example/output
 example/output:
 	@@echo "Building example."
 	@@mkdir -p example/output
-	@@${shell echo -e ./XSHXSHMakeFile.sh -l js example/input} > example/output/js-object.js
+	@@${shell echo -e ./XSHMakeFile.sh -l js example/input} > example/output/js-object.js
 	@@${shell echo -e ./XSHMakeFile.sh -l js -k 0 example/input} > example/output/js-array.js
 	@@${shell echo -e ./XSHMakeFile.sh -l php example/input} > example/output/php-associative-array.js
 	@@${shell echo -e ./XSHMakeFile.sh -l php -k 0 example/input} > example/output/php-indexed-array.js
