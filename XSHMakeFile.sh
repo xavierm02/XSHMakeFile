@@ -21,20 +21,20 @@ Options:
     -a, --assignment-operator       Text to add between the name of a node and its content. Default: "$DassignmentOperator"
     -c, --closing                   Text to add after the content of a directory. Default: "$Dclosing"
     -C, --CLOSING                   Text to add after the content of the global directory. Default: value of -c or --closing
-    -h, --help						Output this text.
-    -i, --indentation       		Text to add at the beginning of every line representing the current indentation. Default: "$Dindentation"
-    -k, --key						Boolean controling the output of the filename. Default: $Dkey
-    -l, --language					Shorthand to output in some languages. If other parameters are given, they override the ones for the given language.
+    -h, --help                      Output this text.
+    -i, --indentation               Text to add at the beginning of every line representing the current indentation. Default: "$Dindentation"
+    -k, --key                       Boolean controling the output of the filename. Default: $Dkey
+    -l, --language                  Shorthand to output in some languages. If other parameters are given, they override the ones for the given language.
     -n, --new-line                  Text to add to get to the next line. Default: "$DnewLine"
     -o, --opening                   Text to add before the content of a directory. Default: "$Dopening"
     -O, --OPENING                   Text to add before the content of the global directory. Default: value of -o or --opening
     -t, --tabulation                Text to use to indent. Defaut: "$Dtabulation"
 
 Errors:
-	1: Help has been asked by -h or --help.
-	2: No path has been given.
-	3: One of the path given doesn't represent anything.
-	4: Value given to -l or --language isn't a proper value.
+    1: Help has been asked by -h or --help.
+    2: No path has been given.
+    3: One of the path given doesn't represent anything.
+    4: Value given to -l or --language isn't a proper value.
 
 EOF
 }
@@ -55,21 +55,21 @@ while [ "$1" != "" ]; do
             CLOSING=$1
             ;;
         "-h" | "--help" )
-			usage
-			exit 1
-			;;
+            usage
+            exit 1
+            ;;
         "-i" | "--indentation" )
             shift
             indentation=$1
             ;;
         "-k" | "--key" )
-			shift
-			key=$1
-			;;
-		"-l" | "--language" )
-			shift
-			language=$1
-			;;
+            shift
+            key=$1
+            ;;
+        "-l" | "--language" )
+            shift
+            language=$1
+            ;;
         "-n" | "--new-line" )
             shift
             newLine=$1
@@ -96,118 +96,118 @@ done
 src=""
 isFirstSrc=1
 while [ "$1" != "" ]; do
-	if [ -z "$1" ] || [ ! -e "$1" ] ; then
-		usage
-		exit 3
-	else
-		 if [ $isFirstSrc != 0 ] ; then
+    if [ -z "$1" ] || [ ! -e "$1" ] ; then
+        usage
+        exit 3
+    else
+         if [ $isFirstSrc != 0 ] ; then
             isFirstSrc=0
         else
             src+=" "
         fi
         src+="$1"
-	fi
-	shift
+    fi
+    shift
 done
 if [ "$src" == "" ]; then
-	usage
-	exit 2
+    usage
+    exit 2
 fi
 
 # For each possible argument or flag, set default value if it isn't set
 if [ -z "$language" ] ; then
 
-	if [ -z "$assignmentOperator" ] ; then
-		assignmentOperator=$DassignmentOperator
-	fi
-	if [ -z "$closing" ] ; then
-		closing=$Dclosing
-	fi
-	if [ -z "$CLOSING" ] ; then
-		CLOSING=$DCLOSING
-	fi
-	if [ -z "$key" ] ; then
-		key=$Dkey
-	fi
-	if [ -z "$opening" ] ; then
-		opening=$Dopening
-	fi
-	if [ -z "$OPENING" ] ; then
-		OPENING=$DOPENING
-	fi
+    if [ -z "$assignmentOperator" ] ; then
+        assignmentOperator=$DassignmentOperator
+    fi
+    if [ -z "$closing" ] ; then
+        closing=$Dclosing
+    fi
+    if [ -z "$CLOSING" ] ; then
+        CLOSING=$DCLOSING
+    fi
+    if [ -z "$key" ] ; then
+        key=$Dkey
+    fi
+    if [ -z "$opening" ] ; then
+        opening=$Dopening
+    fi
+    if [ -z "$OPENING" ] ; then
+        OPENING=$DOPENING
+    fi
 
 elif [ "$language" == "js" ] ; then
-	
-	if [ -z "$assignmentOperator" ] ; then
-		assignmentOperator=": "
-	fi
-	if [ -z "$key" ] ; then
-		key=1
-	fi
-	if [ "$key" == "1" ] ; then
-		if [ -z "$opening" ] ; then
-			opening="{"
-		fi
-		if [ -z "$OPENING" ] ; then
-			OPENING="{"
-		fi
-		if [ -z "$closing" ] ; then
-			closing="}"
-		fi
-		if [ -z "$CLOSING" ] ; then
-			CLOSING="}"
-		fi
-	else
-		if [ -z "$opening" ] ; then
-			opening="["
-		fi
-		if [ -z "$OPENING" ] ; then
-			OPENING="["
-		fi
-		if [ -z "$closing" ] ; then
-			closing="]"
-		fi
-		if [ -z "$CLOSING" ] ; then
-			CLOSING="]"
-		fi
-	fi
-	
+    
+    if [ -z "$assignmentOperator" ] ; then
+        assignmentOperator=": "
+    fi
+    if [ -z "$key" ] ; then
+        key=1
+    fi
+    if [ "$key" == "1" ] ; then
+        if [ -z "$opening" ] ; then
+            opening="{"
+        fi
+        if [ -z "$OPENING" ] ; then
+            OPENING="{"
+        fi
+        if [ -z "$closing" ] ; then
+            closing="}"
+        fi
+        if [ -z "$CLOSING" ] ; then
+            CLOSING="}"
+        fi
+    else
+        if [ -z "$opening" ] ; then
+            opening="["
+        fi
+        if [ -z "$OPENING" ] ; then
+            OPENING="["
+        fi
+        if [ -z "$closing" ] ; then
+            closing="]"
+        fi
+        if [ -z "$CLOSING" ] ; then
+            CLOSING="]"
+        fi
+    fi
+    
 elif [ "$language" == "php" ] ; then
-	
-	if [ -z "$assignmentOperator" ] ; then
-		assignmentOperator=" => "
-	fi
-	if [ -z "$closing" ] ; then
-		closing=")"
-	fi
-	if [ -z "$CLOSING" ] ; then
-		CLOSING=")"
-	fi
-	if [ -z "$key" ] ; then
-		key=1
-	fi
-	if [ -z "$opening" ] ; then
-		opening="Array("
-	fi
-	if [ -z "$OPENING" ] ; then
-		OPENING="Array("
-	fi
-	
+    
+    if [ -z "$assignmentOperator" ] ; then
+        assignmentOperator=" => "
+    fi
+    if [ -z "$closing" ] ; then
+        closing=")"
+    fi
+    if [ -z "$CLOSING" ] ; then
+        CLOSING=")"
+    fi
+    if [ -z "$key" ] ; then
+        key=1
+    fi
+    if [ -z "$opening" ] ; then
+        opening="Array("
+    fi
+    if [ -z "$OPENING" ] ; then
+        OPENING="Array("
+    fi
+    
 else
-	
-	usage
-	exit 4
-	
+    
+    usage
+    exit 4
+    
 fi
 
 if [ -z "$indentation" ] ; then
-	indentation=$Dindentation
+    indentation=$Dindentation
 fi
 if [ -z "$newLine" ] ; then
-	newLine=$DnewLine
+    newLine=$DnewLine
 fi
 if [ -z "$tabulation" ] ; then
-	tabulation=$Dtabulation
+    tabulation=$Dtabulation
 fi
 
 ### Functions definition ###
@@ -223,7 +223,7 @@ outputChildNodes( ) {
 
 #outputNodes path indentation nodeName1 [nodeName2] [...]
 outputNodes( ) {
-	local path=$1
+    local path=$1
     local indentation=$2
     local isFirstLevel=$3
     local isfirstnode=1
@@ -231,8 +231,8 @@ outputNodes( ) {
     
     shift 3
     
-	while [ "$1" != "" ]; do
-		childNodeName=$1
+    while [ "$1" != "" ]; do
+        childNodeName=$1
         if [ $isfirstnode != 0 ] ; then
             isfirstnode=0
         else
@@ -255,19 +255,19 @@ outputDirectory( ) {
     local indentation=$4
     
     if [ "$isFirstLevel" == "1" ]; then
-		output+="$OPENING"
+        output+="$OPENING"
     else
-		output+="$opening"
-	fi
+        output+="$opening"
+    fi
     
     output+="$newLine"
     outputChildNodes $path $nodeName $tabulation$indentation
     output+="$newLine$indentation"
     if [ "$isFirstLevel" == "1" ]; then
-		output+="$CLOSING"
+        output+="$CLOSING"
     else
-		output+="$closing"
-	fi
+        output+="$closing"
+    fi
 }
 
 # outputFile path filename indentation
