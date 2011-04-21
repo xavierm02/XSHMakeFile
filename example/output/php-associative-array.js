@@ -2,6 +2,18 @@ Array(
     "languages" => Array(
         "native" => Array(
             "Python" => "http://www.python.org/"
+            /* Multiline identation test :
+                \
+                 \
+                  \
+                   \
+                    \
+                    /
+                   /
+                  /
+                 /
+                /
+            example/
         ),
         "web" => Array(
             "client" => Array(

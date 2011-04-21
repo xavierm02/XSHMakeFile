@@ -2,6 +2,18 @@
     "languages": {
         "native": {
             "Python": "http://www.python.org/"
+            /* Multiline identation test :
+                \
+                 \
+                  \
+                   \
+                    \
+                    /
+                   /
+                  /
+                 /
+                /
+            example/
         },
         "web": {
             "client": {

@@ -245,13 +245,7 @@ outputChildNodes( ) {
     local nodeName=$2
     local indentation=$3
     
-    if [ "$isFirstLevel" == "1" ] ; then
-        fullpath=$nodeName
-    else
-        fullpath=$path/$nodeName
-    fi
-    
-    outputNodes $fullpath "$indentation" "0" `ls $fullpath`
+    outputNodes $path/$nodeName "$indentation" "0" `ls $path/$nodeName`
 }
 
 #outputNodes path indentation nodeName1 [nodeName2] [...]
@@ -315,23 +309,18 @@ outputFile( ) {
     local filename=$2
     local isFirstLevel=$3
     local indentation=$4
-    local IFS=" "
+    local IFS=\$
     local isfirstline=1
     
-    if [ "$isFirstLevel" == "1" ] ; then
-        fullpath=$filename
-    else
-        fullpath=$path/$filename
-    fi
-    
-    while read line ; do
+    while read -r line ; do
+        line=`echo $line | sed -e 's/\\\\/\\\\\\\\/g' | sed -e 's/*/\\*/g'`
         if [ $isfirstline != 0 ] ; then
             isfirstline=0
         else
             output+="$newLine$indentation"
         fi
         output+="$line"
-    done < $fullpath
+    done < $path/$filename
 }
 
 # outputNode path nodeName indentation isFirstLevel 
@@ -351,6 +340,13 @@ outputNode( ) {
 ### Main script ###
 output=""
 
-outputNodes '.' "$indentation" "1" $src
+path=${src%/*}
+src=${src##*/}
+
+if [ "$path" == "" ] ; then
+    path=.
+fi
+
+outputNodes $path "$indentation" "1" $src
 
 echo -en "$output"

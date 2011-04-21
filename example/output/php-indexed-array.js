@@ -2,6 +2,18 @@ Array(
     Array(
         Array(
             "http://www.python.org/"
+            /* Multiline identation test :
+                \
+                 \
+                  \
+                   \
+                    \
+                    /
+                   /
+                  /
+                 /
+                /
+            example/
         ),
         Array(
             Array(
