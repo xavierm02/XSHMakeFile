@@ -3,6 +3,7 @@
 ### Default values ###
 DassignmentOperator=": "
 Dclosing="}"
+DforceIndentFirstLine=0
 Dindentation=""
 DINDENTATION="0"
 Dkey=1
@@ -22,9 +23,10 @@ Options:
     -a, --assignment-operator       Text to add between the name of a node and its content. Default: "$DassignmentOperator"
     -c, --closing                   Text to add after the content of a directory. Default: "$Dclosing"
     -C, --CLOSING                   Text to add after the content of the global directory. Default: value of -c or --closing
+    -f, --force-indent-first-line   Boolean controling whether the first line should be indented or not. Default: $DforceIndentFirstLine
     -h, --help                      Output this text.
     -i, --indentation               Text to add at the beginning of every line representing the current indentation. Default: "$Dindentation"
-    -I, --INDENTATION                Number of times the value of -t or --tabulation should be inserted after the value of -i or --indentation
+    -I, --INDENTATION               Number of times the value of -t or --tabulation should be inserted after the value of -i or --indentation. Default: $DINDENTATION
     -k, --key                       Boolean controling the output of the filename. Default: $Dkey
     -l, --language                  Shorthand to output in some languages. If other parameters are given, they override the ones for the given language.
     -n, --new-line                  Text to add to get to the next line. Default: "$DnewLine"
@@ -54,7 +56,12 @@ while [ "$1" != "" ]; do
             closing=$1
             ;;
         "-C" | "--CLOSING" )
+            shift
             CLOSING=$1
+            ;;
+        "-f" | "--force-indent-first-line" )
+            shift
+            forceIndentFirstLine=$1
             ;;
         "-h" | "--help" )
             usage
@@ -206,6 +213,10 @@ else
     
 fi
 
+
+if [ -z "$forceIndentFirstLine" ] ; then
+    forceIndentFirstLine=$DforceIndentFirstLine
+fi
 if [ -z "$indentation" ] ; then
     indentation=$Dindentation
 fi
@@ -254,9 +265,15 @@ outputNodes( ) {
         else
             output+=",$newLine"
         fi
-        output+=$indentation
-        if [ $key != 0 ] && [ $isFirstLevel != 1 ] ; then
-            output+="\"${childNodeName%.*}\"$assignmentOperator"
+        if [ $isFirstLevel == 1 ] ; then
+            if [ $forceIndentFirstLine == 1 ] ; then
+                output+=$indentation
+            fi
+        else
+            output+=$indentation
+            if [ $key != 0 ] ; then
+                output+="\"${childNodeName%.*}\"$assignmentOperator"
+            fi
         fi
         outputNode $path $childNodeName $isFirstLevel $indentation
         shift
