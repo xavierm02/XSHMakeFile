@@ -9,7 +9,7 @@ DINDENTATION="0"
 Dkey=1
 DnewLine="\n"
 Dopening="{"
-Dtabulation="\t"
+Dtabulation='    '
 
 DCLOSING=$Dclosing
 DOPENING=$Dopening
@@ -267,15 +267,15 @@ outputNodes( ) {
         fi
         if [ $isFirstLevel == 1 ] ; then
             if [ $forceIndentFirstLine == 1 ] ; then
-                output+=$indentation
+                output+="$indentation"
             fi
         else
-            output+=$indentation
+            output+="$indentation"
             if [ $key != 0 ] ; then
                 output+="\"${childNodeName%.*}\"$assignmentOperator"
             fi
         fi
-        outputNode $path $childNodeName $isFirstLevel $indentation
+        outputNode $path $childNodeName $isFirstLevel "$indentation"
         shift
     done
 }
@@ -294,7 +294,7 @@ outputDirectory( ) {
     fi
     
     output+="$newLine"
-    outputChildNodes $path $nodeName $tabulation$indentation
+    outputChildNodes $path $nodeName "$tabulation$indentation"
     output+="$newLine$indentation"
     if [ "$isFirstLevel" == "1" ]; then
         output+="$CLOSING"
@@ -329,9 +329,9 @@ outputNode( ) {
     local indentation=$4
     
     if [ -d $path/$nodeName ] ; then
-        outputDirectory $path $nodeName $isFirstLevel $indentation
+        outputDirectory $path $nodeName $isFirstLevel "$indentation"
     else
-        outputFile $path $nodeName $indentation
+        outputFile $path $nodeName "$indentation"
     fi
 }
 
