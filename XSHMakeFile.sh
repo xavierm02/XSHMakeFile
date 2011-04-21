@@ -4,6 +4,7 @@
 DassignmentOperator=": "
 Dclosing="}"
 Dindentation=""
+DINDENTATION="0"
 Dkey=1
 DnewLine="\n"
 Dopening="{"
@@ -23,6 +24,7 @@ Options:
     -C, --CLOSING                   Text to add after the content of the global directory. Default: value of -c or --closing
     -h, --help                      Output this text.
     -i, --indentation               Text to add at the beginning of every line representing the current indentation. Default: "$Dindentation"
+    -I, --INDENTATION                Number of times the value of -t or --tabulation should be inserted after the value of -i or --indentation
     -k, --key                       Boolean controling the output of the filename. Default: $Dkey
     -l, --language                  Shorthand to output in some languages. If other parameters are given, they override the ones for the given language.
     -n, --new-line                  Text to add to get to the next line. Default: "$DnewLine"
@@ -61,6 +63,10 @@ while [ "$1" != "" ]; do
         "-i" | "--indentation" )
             shift
             indentation=$1
+            ;;
+        "-I" | "--INDENTATION" )
+            shift
+            INDENTATION=$1
             ;;
         "-k" | "--key" )
             shift
@@ -203,12 +209,22 @@ fi
 if [ -z "$indentation" ] ; then
     indentation=$Dindentation
 fi
+if [ -z "$INDENTATION" ] ; then
+    INDENTATION=$DINDENTATION
+fi
 if [ -z "$newLine" ] ; then
     newLine=$DnewLine
 fi
 if [ -z "$tabulation" ] ; then
     tabulation=$Dtabulation
 fi
+
+i=0
+while [ $i -lt $INDENTATION ] 
+do 
+   indentation="$indentation$tabulation"
+   i=`expr $i + 1` 
+done
 
 ### Functions definition ###
 
